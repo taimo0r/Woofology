@@ -21,3 +21,4 @@ Users can identify the dog breeds from pictures and play the breed guessing quiz
 ## Group 3
 
 1. Taimoor Mujahid - 1160383
+2. Yinjiang Nie - 0847092
