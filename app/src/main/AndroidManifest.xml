@@ -13,11 +13,13 @@
         android:theme="@style/Theme.Woofology"
         tools:targetApi="31">
         <activity
+
             android:name=".ModelClasses.FullImageActivity"
             android:exported="false" />
-        <activity
-            android:name=".AllBreeds"
-            android:exported="false" />
+
+        <activity android:name=".MyDogsActivity"
+            android:exported="false"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
