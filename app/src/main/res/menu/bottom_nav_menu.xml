@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/find_dog_activity"
+        android:title="Dog Analysis"
+        android:icon="@drawable/image_search_24">
+    </item>
+
+    <item android:id="@+id/list_activity"
+        android:title="Breed List"
+        android:icon="@drawable/list_24">
+    </item>
+
+    <item android:id="@+id/random_activity"
+        android:title="Random Dogs"
+        android:icon="@drawable/ic_random_dog"/>
+
+    <item android:id="@+id/quiz_activity"
+        android:title="Quiz"
+        android:icon="@drawable/quiz_icon">
+    </item>
+
+    <item android:id="@+id/downloaded_images_activity"
+        android:title="Downloads"
+        android:icon="@drawable/image_24">
+    </item>
+
+
+</menu>
