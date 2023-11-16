@@ -14,4 +14,9 @@ class Dog(
     var breedOneId: Int,
     var breedTwoId: Int,
     var breedThreeId: Int
+
+
+
+
 )
+

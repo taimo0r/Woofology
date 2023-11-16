@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:background="@color/white"
+    android:paddingVertical="25dp"
+    android:paddingHorizontal="80dp"
+   >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-light"
+        android:drawablePadding ="5dp"
+        android:maxLines="1"
+        android:text="Select from:"
+        android:textSize="20dp"
+        android:textColor="@color/dark_gray"
+    />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:drawableLeft="@drawable/camera_selection"
+            android:text=" Camera"
+            android:textSize="20dp"
+            android:layout_gravity="left"
+            android:textColor="@color/black"
+            android:id="@+id/cameraBtn"/>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="Gallery"
+            android:layout_gravity="left"
+            android:drawablePadding="5dp"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:drawableLeft="@drawable/gallery_selection"
+            android:id="@+id/galleryBtn"/>
+
+    </LinearLayout>
+
+</LinearLayout>
