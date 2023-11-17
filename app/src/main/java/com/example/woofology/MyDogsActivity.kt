@@ -96,8 +96,11 @@ class MyDogsActivity : AppCompatActivity(), RecyclerItemTouchHelper.RecyclerItem
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-
-                //Todo: MakeDogAnalysisActivity
+                val intent = Intent(this@MyDogsActivity, DogAnalysisActivity::class.java)
+                val b = Bundle()
+                b.putString("imageUri", newDogPhotoPath) //Your id
+                intent.putExtras(b) //Put your id to your next Intent
+                startActivity(intent)
             }
         }
 
@@ -193,8 +196,11 @@ class MyDogsActivity : AppCompatActivity(), RecyclerItemTouchHelper.RecyclerItem
             if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK && null != data) {
                 // TODO Remove this comments
             }
-
-            //Todo: Make DogAnalysisActivity
+            val intent = Intent(this@MyDogsActivity, DogAnalysisActivity::class.java)
+            val b = Bundle()
+            b.putString("imageUri", newDogPhotoPath) //Your id
+            intent.putExtras(b)
+            startActivity(intent)
 
         } catch (e: Exception) {
             Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show()

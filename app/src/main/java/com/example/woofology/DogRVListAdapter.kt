@@ -64,8 +64,12 @@ class DogRVListAdapter(private val context: Context, private val activity: Activ
     }
 
     private fun createListeners(holder: MyViewHolder, dog: Dog) {
-
-        //Todo: Make DetailAnalysisActivity
-
+        holder.viewForeground.setOnClickListener {
+            val intent = Intent(context, UpdateDogActivity::class.java)
+            val b = Bundle()
+            b.putInt("idDog", dog.id) // Your id
+            intent.putExtras(b) // Put your id to your next Intent
+            context.startActivity(intent)
+        }
     }
 }
