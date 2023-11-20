@@ -9,4 +9,5 @@ class FullImageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_full_image)
     }
+
 }

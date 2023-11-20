@@ -110,7 +110,12 @@ class MyDogsActivity : AppCompatActivity(), RecyclerItemTouchHelper.RecyclerItem
                 R.id.find_dog_activity -> return@setOnNavigationItemSelectedListener true
                 R.id.list_activity -> {
 
-                //Todo: Make AllBreedsActivity
+                    Intent(this@MyDogsActivity, AllBreeds::class.java).also {
+                        startActivity(it)
+                        overridePendingTransition(0, 0)
+                        finish()
+                    }
+                    return@setOnNavigationItemSelectedListener true
 
                 }
                 R.id.random_activity -> {
