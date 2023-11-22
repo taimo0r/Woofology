@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.io.Serializable
 
 class BreedImages : AppCompatActivity(), onItemClick {
 
@@ -69,7 +70,7 @@ class BreedImages : AppCompatActivity(), onItemClick {
 
     override fun onImgItemClick(link: String?, position: Int) {
         val intent = Intent(this@BreedImages, FullImageActivity::class.java).apply {
-            putExtra("list", images.toTypedArray())
+            putExtra("list", images as Serializable)
             putExtra("position", position)
             putExtra("activity", "breeds")
         }

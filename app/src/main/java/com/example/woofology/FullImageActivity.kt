@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.squareup.picasso.Picasso
 
 import java.util.*
 
@@ -54,7 +55,7 @@ class FullImageActivity : AppCompatActivity() {
             val bitmap = BitmapFactory.decodeFile(link)
             dogImage.setImageBitmap(bitmap)
         } else {
-            list = intent.getSerializableExtra("list") as List<String>?
+            list = intent.getSerializableExtra("list") as List<String>
             position = intent.getIntExtra("position", -1)
         }
 

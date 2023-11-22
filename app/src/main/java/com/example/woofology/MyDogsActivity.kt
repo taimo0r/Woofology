@@ -98,8 +98,8 @@ class MyDogsActivity : AppCompatActivity(), RecyclerItemTouchHelper.RecyclerItem
             if (result.resultCode == Activity.RESULT_OK) {
                 val intent = Intent(this@MyDogsActivity, DogAnalysisActivity::class.java)
                 val b = Bundle()
-                b.putString("imageUri", newDogPhotoPath) //Your id
-                intent.putExtras(b) //Put your id to your next Intent
+                b.putString("imageUri", newDogPhotoPath)
+                intent.putExtras(b)
                 startActivity(intent)
             }
         }
@@ -130,7 +130,12 @@ class MyDogsActivity : AppCompatActivity(), RecyclerItemTouchHelper.RecyclerItem
                 }
                 R.id.downloaded_images_activity -> {
 
-                // Todo: Make DownloadedImagesActivity
+                    Intent(this@MyDogsActivity, Downloads::class.java).also {
+                        startActivity(it)
+                        overridePendingTransition(0, 0)
+                        finish()
+                    }
+                    return@setOnNavigationItemSelectedListener true
 
                 }
             }

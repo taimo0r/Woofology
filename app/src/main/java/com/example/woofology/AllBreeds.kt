@@ -54,8 +54,14 @@ class AllBreeds : AppCompatActivity() {
                 R.id.quiz_activity -> {
                 //Todo: Make QuizActivity
                 }
+
                 R.id.downloaded_images_activity -> {
-                //Todo: Make DownloadedImagedActivity
+                    Intent(this@AllBreeds, Downloads::class.java).also {
+                        startActivity(it)
+                        overridePendingTransition(0, 0)
+                        finish()
+                    }
+                    return@setOnNavigationItemSelectedListener true
                 }
             }
             false

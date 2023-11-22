@@ -25,11 +25,13 @@ class AllBreedsAdapter(var context: Context, breedList: MutableList<String>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val name = breedList[position]
         holder.textView.text = name.uppercase(Locale.getDefault())
+
         holder.textView.setOnClickListener {
             val intent = Intent(context, BreedImages::class.java)
             intent.putExtra("name", name)
             context.startActivity(intent)
         }
+
     }
 
     override fun getItemCount(): Int {
