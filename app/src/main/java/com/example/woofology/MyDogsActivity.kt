@@ -2,6 +2,7 @@ package com.example.woofology
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -204,7 +205,7 @@ class MyDogsActivity : AppCompatActivity(), RecyclerItemTouchHelper.RecyclerItem
                 newDogPhotoPath = copyFileFromGallery(selectedImage)
             }
             if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK && null != data) {
-                // TODO Remove this comments
+
             }
             val intent = Intent(this@MyDogsActivity, DogAnalysisActivity::class.java)
             val b = Bundle()
@@ -253,9 +254,9 @@ class MyDogsActivity : AppCompatActivity(), RecyclerItemTouchHelper.RecyclerItem
         val imageFileName = "JPEG_$timeStamp"
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val image = File.createTempFile(
-            imageFileName,  /* prefix */
-            ".jpg",         /* suffix */
-            storageDir      /* directory */
+            imageFileName,    //prefix
+            ".jpg",    //suffix
+            storageDir      // directory
         )
         newDogPhotoPath = image.absolutePath
         return image
@@ -270,9 +271,9 @@ class MyDogsActivity : AppCompatActivity(), RecyclerItemTouchHelper.RecyclerItem
         val imageFileName = "JPEG_$timeStamp"
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val image = File.createTempFile(
-            imageFileName,  /* prefix */
-            ".jpg",         /* suffix */
-            storageDir      /* directory */
+            imageFileName,     // prefix
+            ".jpg",     // suffix
+            storageDir       // directory
         )
         val bos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100 /*ignored for PNG*/, bos)
@@ -291,13 +292,34 @@ class MyDogsActivity : AppCompatActivity(), RecyclerItemTouchHelper.RecyclerItem
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int, position: Int) {
         if (viewHolder is DogRVListAdapter.MyViewHolder) {
-            val deletedDog = dogsRVList[viewHolder.adapterPosition]
-            val deletedIndex = viewHolder.adapterPosition
-            deleteDog(deletedDog, deletedIndex)
-            mAdapter.removeItem(viewHolder.adapterPosition)
+
+            val builder = AlertDialog.Builder(this)
+
+            builder.setTitle("Confirmation")
+            builder.setMessage("Do you permanently want to delete this? ")
+
+            builder.setPositiveButton("Yes") { dialog, which ->
+
+                val deletedDog = dogsRVList[viewHolder.adapterPosition]
+                val deletedIndex = viewHolder.adapterPosition
+                deleteDog(deletedDog, deletedIndex)
+                mAdapter.removeItem(viewHolder.adapterPosition)
+
+            }
+
+            builder.setNegativeButton("No") { dialog, which ->
+                dialog.dismiss()
+            }
+
+            val dialog: AlertDialog = builder.create()
+
+            dialog.setCanceledOnTouchOutside(false)
+            dialog.show()
+
+
+
         }
     }
-
 
     private fun dogsRVLoadData() {
         val dbManager = DBManager(this, this)

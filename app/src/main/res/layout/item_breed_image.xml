@@ -6,13 +6,27 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/image_breed"
+    <FrameLayout
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/dog_icon_svg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <ImageView
+            android:id="@+id/image_breed"
+            android:layout_width="115dp"
+            android:layout_gravity="center"
+            android:layout_height="115dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/dog_icon_svg"
+          />
+
+    </FrameLayout>
+
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

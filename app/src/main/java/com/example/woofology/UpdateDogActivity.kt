@@ -72,6 +72,7 @@ class UpdateDogActivity : AppCompatActivity() {
         origin!!.text = "Origin: " + dogDataSelected!!.origin
         lifeSpan!!.text = "Life Span: " + dogDataSelected!!.lifeSpan
         temperament!!.text = dogDataSelected!!.temperament
+
         getHealthIssues(dogDataSelected!!.health, dogHealthIssues)
         if (dog!!.selectedBreed == dog!!.breedOneId) {
             breedOne!!.setTextColor(resources.getColor(R.color.blue_dockdeck))

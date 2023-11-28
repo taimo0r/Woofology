@@ -1,5 +1,6 @@
 package com.example.woofology
 
+import android.app.AlertDialog
 import android.app.DownloadManager
 import android.app.WallpaperManager
 import android.content.Context
@@ -67,20 +68,52 @@ class FullImageActivity : AppCompatActivity() {
         }
 
         setWallpaper.setOnClickListener {
-            val wallpaperManager = WallpaperManager.getInstance(this)
-            val bitmap = dogImage.drawable.toBitmap()
 
-            try {
-                wallpaperManager.setBitmap(bitmap)
-                Toast.makeText(this, "Wallpaper Set!", Toast.LENGTH_SHORT).show()
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Toast.makeText(this, "Wallpaper cannot be set", Toast.LENGTH_SHORT).show()
+            val builder = AlertDialog.Builder(this)
+
+            builder.setTitle("Confirmation")
+            builder.setMessage("Do you want to set this image as your wallpaper? ")
+
+            builder.setPositiveButton("Yes") { dialog, which ->
+
+                setWallpaper()
+
             }
+
+            builder.setNegativeButton("No") { dialog, which ->
+                dialog.dismiss()
+            }
+
+            val dialog: AlertDialog = builder.create()
+
+            dialog.setCanceledOnTouchOutside(false)
+            dialog.show()
+
         }
 
         downloadBtn.setOnClickListener {
-            downloadImage()
+
+            val builder = AlertDialog.Builder(this)
+
+            builder.setTitle("Confirmation")
+            builder.setMessage("Do you want to download this image in your gallery? ")
+
+            builder.setPositiveButton("Yes") { dialog, which ->
+
+                downloadImage()
+
+            }
+
+            builder.setNegativeButton("No") { dialog, which ->
+                dialog.dismiss()
+            }
+
+            val dialog: AlertDialog = builder.create()
+
+            dialog.setCanceledOnTouchOutside(false)
+            dialog.show()
+
+
         }
 
         nextBtn.setOnClickListener {
@@ -104,6 +137,20 @@ class FullImageActivity : AppCompatActivity() {
         }
     }
 
+    private fun setWallpaper(){
+
+        val wallpaperManager = WallpaperManager.getInstance(this)
+        val bitmap = dogImage.drawable.toBitmap()
+
+        try {
+            wallpaperManager.setBitmap(bitmap)
+            Toast.makeText(this, "Wallpaper Set!", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(this, "Wallpaper cannot be set", Toast.LENGTH_SHORT).show()
+        }
+
+    }
     private fun downloadImage() {
         val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val uri = Uri.parse(list?.get(position))

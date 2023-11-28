@@ -30,7 +30,6 @@ import java.util.LinkedList
 
 class DogAnalysisActivity : AppCompatActivity() {
 
-
     private val handler = Handler()
     private lateinit var progress: ProgressDialog
     private lateinit var dogPhoto: ImageView
