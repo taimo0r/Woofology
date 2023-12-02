@@ -108,7 +108,7 @@ class UpdateDogActivity : AppCompatActivity() {
             setDogData()
         }
         share!!.setOnClickListener {
-            //Todo: Make ShareDogData class
+            ShareDogData.shareDogInfo(this@UpdateDogActivity)
         }
     }
 

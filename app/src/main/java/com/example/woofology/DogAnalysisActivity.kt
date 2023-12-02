@@ -3,7 +3,6 @@ package com.example.woofology
 import android.app.ProgressDialog
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -13,6 +12,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.woofology.Database.DBManager
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.Interpreter
@@ -253,7 +253,7 @@ class DogAnalysisActivity : AppCompatActivity() {
 
         share.setOnClickListener {
             try {
-                // TODO:  Make a class "ShareDogData"
+                ShareDogData.shareDogInfo(this@DogAnalysisActivity)
             } catch (e: IOException) {
                 e.printStackTrace()
             }

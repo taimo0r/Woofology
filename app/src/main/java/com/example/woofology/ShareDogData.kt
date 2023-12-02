@@ -16,12 +16,12 @@ object ShareDogData {
     @Throws(IOException::class)
     fun shareDogInfo(activity: Activity) {
         val view = activity.findViewById<View>(R.id.rootView)
-        val bitmap = Bitmap.createBitmap(view.width, view.height * 2, Bitmap.Config.ARGB_8888)
+        val bitmap = Bitmap.createBitmap(view.width, (view.height * 1.3).toInt(), Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         canvas.drawColor(Color.WHITE)
         view.layout(view.left, view.top, view.right, view.bottom)
         view.draw(canvas)
-        
+
         // Save Bitmap as JPG
         val imageFileName = "JPEG_SHARE_IMAGE_DOG.jpg"
         val imageDogShare = File(activity.externalCacheDir, imageFileName)
@@ -36,7 +36,7 @@ object ShareDogData {
         fos.close()
         val shareImageURI = FileProvider.getUriForFile(
             activity,
-            "com.arp.dogbreedfinder.identifier.camera.fileprovider",
+            "com.example.woofology.fileprovider",
             imageDogShare
         )
         val intent = Intent(Intent.ACTION_SEND)
