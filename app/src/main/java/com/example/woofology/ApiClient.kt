@@ -26,6 +26,11 @@ class ApiClient(var context: Context) {
         fun getBreedImages(@Path("type") type: String?): Call<AllBreedsResponse>
     }
 
+    interface randomBreedInterface {
+        @get:GET("breeds/image/random")
+        val getRandomBreed: Call<RandomBreedResponse?>?
+    }
+
 
     fun getAllBreeds(listener: AllBreedsListener) {
         val apiInterface = retrofit.create(
@@ -68,6 +73,27 @@ class ApiClient(var context: Context) {
             }
 
             override fun onFailure(call: Call<AllBreedsResponse?>, t: Throwable) {
+                listener.onError(t.message)
+            }
+        })
+    }
+
+    fun getRandomBreed(listener: RandomBreedListener) {
+        val apiInterface = retrofit.create(randomBreedInterface::class.java)
+        val call: Call<RandomBreedResponse> = apiInterface.getRandomBreed
+        call.enqueue(object : Callback<RandomBreedResponse?> {
+            override fun onResponse(
+                call: Call<RandomBreedResponse?>,
+                response: Response<RandomBreedResponse?>
+            ) {
+                if (!response.isSuccessful) {
+                    Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show()
+                    return
+                }
+                listener.onFetch(response.body(), response.message())
+            }
+
+            override fun onFailure(call: Call<RandomBreedResponse?>, t: Throwable) {
                 listener.onError(t.message)
             }
         })
