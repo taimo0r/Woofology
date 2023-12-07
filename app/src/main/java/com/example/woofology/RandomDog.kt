@@ -71,7 +71,7 @@ class RandomDog : AppCompatActivity() {
                 R.id.quiz_activity -> {
 
 
-             
+
                 }
 
                 R.id.downloaded_images_activity -> {
