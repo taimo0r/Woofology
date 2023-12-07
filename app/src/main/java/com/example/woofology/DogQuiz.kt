@@ -19,7 +19,6 @@ import com.squareup.picasso.Picasso
 import java.util.Random
 
 
-
 class DogQuiz : AppCompatActivity() {
     var quizImg: ImageView? = null
     var ansIcon: ImageView? = null

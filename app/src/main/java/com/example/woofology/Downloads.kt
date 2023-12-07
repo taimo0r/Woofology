@@ -51,21 +51,30 @@ class Downloads : AppCompatActivity(), onItemClick {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.find_dog_activity -> {
-                    val analysisIntent = Intent(this@Downloads, MyDogsActivity::class.java)
-                    startActivity(analysisIntent)
-                    overridePendingTransition(0, 0)
-                    finish()
+                    Intent(this@Downloads, MyDogsActivity::class.java).also {
+                        startActivity(it)
+                        overridePendingTransition(0, 0)
+                        finish()
+                    }
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.list_activity -> {
-                    val allBreedsIntent = Intent(this@Downloads, AllBreeds::class.java)
-                    startActivity(allBreedsIntent)
-                    overridePendingTransition(0, 0)
-                    finish()
+                    Intent(this@Downloads, AllBreeds::class.java).also {
+                        startActivity(it)
+                        overridePendingTransition(0, 0)
+                        finish()
+                    }
+
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.random_activity -> {
-                    //Todo: Make RandomDogsActivity
+
+                    Intent(this@Downloads, RandomDog::class.java).also {
+                        startActivity(it)
+                        overridePendingTransition(0, 0)
+                        finish()
+                    }
+                    return@setOnNavigationItemSelectedListener true
                 }
                 R.id.quiz_activity -> {
                     //Todo: Make QuizActivity

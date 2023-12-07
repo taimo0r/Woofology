@@ -21,17 +21,18 @@ import java.util.Random
 
 
 class RandomDog : AppCompatActivity() {
-    var imgRandom: ImageView? = null
-    var nameRandom: TextView? = null
-    var nextRandom: Button? = null
-    var client: ApiClient? = null
-    var downloadBtn: FloatingActionButton? = null
-    var setWallpaper: FloatingActionButton? = null
-    var imgLink: String? = null
-    var name: String? = null
-    var random = Random()
-    var key = 0
-    var bottomNavigationView: BottomNavigationView? = null
+
+    private lateinit var imgRandom: ImageView
+    private lateinit var nameRandom: TextView
+    private lateinit var nextRandom: Button
+    private lateinit var downloadBtn: FloatingActionButton
+    private lateinit var setWallpaper: FloatingActionButton
+    private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var client: ApiClient
+    private lateinit var imgLink: String
+    private lateinit var name: String
+    private val random = Random()
+    private var key: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_random_dog)
@@ -99,23 +100,28 @@ class RandomDog : AppCompatActivity() {
         downloadBtn.setOnClickListener(View.OnClickListener { downloadImage() })
     }
 
-    private val listener: RandomBreedListener = object : RandomBreedListener() {
-        fun onFetch(response: RandomBreedResponse, message: String?) {
-            if (response.message.isEmpty()) {
+    private val listener: RandomBreedListener = object : RandomBreedListener {
+        override fun onFetch(response: RandomBreedResponse?, message: String?) {
+            if (response?.message?.isEmpty() == true) {
                 Toast.makeText(this@RandomDog, "No Dog Breeds Available", Toast.LENGTH_SHORT).show()
                 return
             }
-            showRandomBreeds(response)
+            if (response != null) {
+                showRandomBreeds(response)
+            }
         }
 
-        fun onError(message: String?) {}
+        override fun onError(message: String?) {
+
+        }
+
     }
 
     private fun showRandomBreeds(response: RandomBreedResponse) {
-        imgLink = response.message
+        imgLink = response.message.toString()
         Picasso.get().load(imgLink).into(imgRandom)
-        name = Common.getBreedFromLink(response.message)
-        nameRandom!!.text = name
+        name = Common.getBreedFromLink(response.message.toString())
+        nameRandom.text = name
     }
 
     private fun downloadImage() {

@@ -121,7 +121,12 @@ class MyDogsActivity : AppCompatActivity(), RecyclerItemTouchHelper.RecyclerItem
                 }
                 R.id.random_activity -> {
 
-                // Todo: Make RandomDogsPictureActivity
+                    Intent(this@MyDogsActivity, RandomDog::class.java).also {
+                        startActivity(it)
+                        overridePendingTransition(0, 0)
+                        finish()
+                    }
+                    return@setOnNavigationItemSelectedListener true
 
                 }
                 R.id.quiz_activity -> {
