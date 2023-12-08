@@ -77,7 +77,14 @@ class Downloads : AppCompatActivity(), onItemClick {
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.quiz_activity -> {
-                    //Todo: Make QuizActivity
+
+                    Intent(this@Downloads, DogQuiz::class.java).also {
+                        startActivity(it)
+                        overridePendingTransition(0, 0)
+                        finish()
+                    }
+                    return@setOnNavigationItemSelectedListener true
+
                 }
                 R.id.downloaded_images_activity -> return@setOnNavigationItemSelectedListener true
             }

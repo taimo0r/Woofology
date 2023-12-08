@@ -20,23 +20,26 @@ import java.util.Random
 
 
 class DogQuiz : AppCompatActivity() {
-    var quizImg: ImageView? = null
-    var ansIcon: ImageView? = null
-    var ansMsg: TextView? = null
-    var cancelTxt: TextView? = null
-    var continueTxt: TextView? = null
-    var btn1: Button? = null
-    var btn2: Button? = null
-    var btn3: Button? = null
-    var btn4: Button? = null
-    var client: ApiClient? = null
-    var questionContainer: ConstraintLayout? = null
-    var answer: String? = null
-    var progressDialog: ProgressDialog? = null
-    var alertDialog: AlertDialog? = null
-    var animationDrawable: Drawable? = null
-    var ans = true
-    var bottomNavigationView: BottomNavigationView? = null
+
+    private lateinit var quizImg: ImageView
+    private lateinit var ansIcon: ImageView
+    private lateinit var ansMsg: TextView
+    private lateinit var cancelTxt: TextView
+    private lateinit var continueTxt: TextView
+    private lateinit var btn1: Button
+    private lateinit var btn2: Button
+    private lateinit var btn3: Button
+    private lateinit var btn4: Button
+    private lateinit var client: ApiClient
+    private lateinit var questionContainer: ConstraintLayout
+    private lateinit var answer: String
+    private lateinit var progressDialog: ProgressDialog
+    private lateinit var alertDialog: AlertDialog
+    private lateinit var animationDrawable: Drawable
+    private var ans = true
+    private lateinit var bottomNavigationView: BottomNavigationView
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dog_quiz)
@@ -174,33 +177,35 @@ class DogQuiz : AppCompatActivity() {
     }
 
     private fun showRandomBreeds(response: RandomBreedResponse) {
+
         val r = Random()
         val i1 = r.nextInt(5 - 1) + 1
+
         Picasso.get().load(response.message).into(quizImg)
         answer = Common.getBreedFromLink(response.message.toString())
-        if (i1 == 1) {
-            btn1!!.text = answer
-            btn2!!.text = randomBreed
-            btn3!!.text = randomBreed
-            btn4!!.text = randomBreed
-        } else if (i1 == 2) {
-            btn2!!.text = answer
-            btn1!!.text = randomBreed
-            btn3!!.text = randomBreed
-            btn4!!.text = randomBreed
-        } else if (i1 == 3) {
-            btn3!!.text = answer
-            btn1!!.text = randomBreed
-            btn2!!.text = randomBreed
-            btn4!!.text = randomBreed
-        } else {
-            btn4!!.text = answer
-            btn1!!.text = randomBreed
-            btn2!!.text = randomBreed
-            btn3!!.text = randomBreed
+
+        val buttons = listOf(btn1, btn2, btn3, btn4)
+        when (i1) {
+            1 -> {
+                btn1.text = answer
+                buttons.subList(1, 4).forEach { it.text = randomBreed }
+            }
+            2 -> {
+                btn2.text = answer
+                buttons.subList(0, 1).plus(buttons.subList(2, 4)).forEach { it.text = randomBreed }
+            }
+            3 -> {
+                btn3.text = answer
+                buttons.subList(0, 2).plus(buttons.subList(3, 4)).forEach { it.text = randomBreed }
+            }
+            else -> {
+                btn4.text = answer
+                buttons.subList(0, 3).forEach { it.text = randomBreed }
+            }
         }
-        questionContainer!!.visibility = View.VISIBLE
-        progressDialog!!.dismiss()
+
+        questionContainer.visibility = View.VISIBLE
+        progressDialog.dismiss()
     }
 
     val randomBreed: String
@@ -209,48 +214,58 @@ class DogQuiz : AppCompatActivity() {
             val randIndex = r.nextInt(Common.breeds.size)
             return Common.breeds.get(randIndex)
         }
-    private val listener: RandomBreedListener = object : RandomBreedListener() {
-        fun onFetch(response: RandomBreedResponse, message: String?) {
-            if (response.message.isEmpty()) {
+    private val listener: RandomBreedListener = object : RandomBreedListener {
+        override fun onFetch(response: RandomBreedResponse?, message: String?) {
+            if (response?.message?.isEmpty() == true) {
                 Toast.makeText(this@DogQuiz, "No Dog Breeds Available", Toast.LENGTH_SHORT).show()
                 return
             }
-            showRandomBreeds(response)
+            if (response != null) {
+                showRandomBreeds(response)
+            }
         }
 
-        fun onError(message: String?) {
+        override fun onError(message: String?) {
             Toast.makeText(this@DogQuiz, message, Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun quizDialog() {
+
         val alert = AlertDialog.Builder(this@DogQuiz)
         val view: View = layoutInflater.inflate(R.layout.dialog_quiz, null)
+
         ansIcon = view.findViewById<View>(R.id.iv_animation) as ImageView
         ansMsg = view.findViewById<View>(R.id.tv_message) as TextView
         cancelTxt = view.findViewById<View>(R.id.cancel_txt) as TextView
         continueTxt = view.findViewById<View>(R.id.continue_txt) as TextView
+
         alert.setView(view)
         alertDialog = alert.create()
-        animationDrawable = ContextCompat.getDrawable(view.context, R.drawable.animated_false_48)
+
+        animationDrawable = ContextCompat.getDrawable(view.context, R.drawable.animated_false_48)!!
+
         if (!ans) {
+
             animationDrawable =
-                ContextCompat.getDrawable(view.context, R.drawable.animated_false_48_outline)
-            ansIcon!!.setImageDrawable(animationDrawable)
-            ansMsg!!.text = "Oops! Wrong answer"
+                ContextCompat.getDrawable(view.context, R.drawable.animated_false_48_outline)!!
+            ansIcon.setImageDrawable(animationDrawable)
+            ansMsg.text = "Oops! Wrong answer"
+
         } else {
-            animationDrawable =
-                ContextCompat.getDrawable(view.context, R.drawable.animated_true_48_outline)
-            ansIcon!!.setImageDrawable(animationDrawable)
-            ansMsg!!.text = "Yayy!! You got it right!"
+
+            animationDrawable = ContextCompat.getDrawable(view.context, R.drawable.animated_true_48_outline)!!
+            ansIcon.setImageDrawable(animationDrawable)
+            ansMsg.text = "Yayy!! You got it right!"
+
         }
-        continueTxt!!.setOnClickListener {
+        continueTxt.setOnClickListener {
             finish()
             overridePendingTransition(0, 0)
             startActivity(intent)
             overridePendingTransition(0, 0)
         }
-        cancelTxt!!.setOnClickListener { alertDialog.dismiss() }
+        cancelTxt.setOnClickListener { alertDialog.dismiss() }
         alertDialog.show()
     }
 }

@@ -26,9 +26,9 @@ class ApiClient(var context: Context) {
         fun getBreedImages(@Path("type") type: String?): Call<AllBreedsResponse>
     }
 
-    interface randomBreedInterface {
-        @get:GET("breeds/image/random")
-        val getRandomBreed: Call<RandomBreedResponse?>?
+    interface RandomBreedInterface {
+        @GET("breeds/image/random")
+        fun getRandomBreed(): Call<RandomBreedResponse>
     }
 
 
@@ -79,8 +79,9 @@ class ApiClient(var context: Context) {
     }
 
     fun getRandomBreed(listener: RandomBreedListener) {
-        val apiInterface = retrofit.create(randomBreedInterface::class.java)
-        val call: Call<RandomBreedResponse> = apiInterface.getRandomBreed
+        val apiInterface = retrofit.create(RandomBreedInterface::class.java)
+        val call = apiInterface.getRandomBreed()
+
         call.enqueue(object : Callback<RandomBreedResponse?> {
             override fun onResponse(
                 call: Call<RandomBreedResponse?>,

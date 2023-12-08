@@ -71,7 +71,12 @@ class RandomDog : AppCompatActivity() {
                 R.id.random_activity -> return@OnNavigationItemSelectedListener true
                 R.id.quiz_activity -> {
 
-
+                    Intent(this@RandomDog, DogQuiz::class.java).also {
+                        startActivity(it)
+                        overridePendingTransition(0, 0)
+                        finish()
+                    }
+                    return@OnNavigationItemSelectedListener true
 
                 }
 

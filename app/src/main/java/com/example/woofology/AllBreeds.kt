@@ -49,10 +49,23 @@ class AllBreeds : AppCompatActivity() {
                 R.id.list_activity -> return@setOnNavigationItemSelectedListener true
 
                 R.id.random_activity -> {
-                //Todo: Make RandomDogActivity
+
+                    Intent(this@AllBreeds, RandomDog::class.java).also {
+                        startActivity(it)
+                        overridePendingTransition(0, 0)
+                        finish()
+                    }
+                    return@setOnNavigationItemSelectedListener true
                 }
                 R.id.quiz_activity -> {
-                //Todo: Make QuizActivity
+
+                    Intent(this@AllBreeds, DogQuiz::class.java).also {
+                        startActivity(it)
+                        overridePendingTransition(0, 0)
+                        finish()
+                    }
+                    return@setOnNavigationItemSelectedListener true
+
                 }
 
                 R.id.downloaded_images_activity -> {
