@@ -1,5 +1,6 @@
 package com.example.woofology
 
+import android.app.AlertDialog
 import android.app.DownloadManager
 import android.app.WallpaperManager
 import android.content.Intent
@@ -15,6 +16,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import java.util.Random
 
@@ -92,17 +94,49 @@ class RandomDog : AppCompatActivity() {
         })
         nextRandom.setOnClickListener(View.OnClickListener { client.getRandomBreed(listener) })
         setWallpaper.setOnClickListener(View.OnClickListener {
-            val wallpaperManager = WallpaperManager.getInstance(this@RandomDog)
-            val bitmap = (imgRandom.getDrawable() as BitmapDrawable).bitmap
-            try {
-                wallpaperManager.setBitmap(bitmap)
-                Toast.makeText(this@RandomDog, "Wallpaper Set!", Toast.LENGTH_SHORT).show()
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Toast.makeText(this@RandomDog, "Wallpaper cannot be set", Toast.LENGTH_SHORT).show()
+            val builder = AlertDialog.Builder(this)
+
+            builder.setTitle("Confirmation")
+            builder.setMessage("Do you want to set this image as your wallpaper? ")
+
+            builder.setPositiveButton("Yes") { dialog, which ->
+
+                setWallpaper()
+
             }
+
+            builder.setNegativeButton("No") { dialog, which ->
+                dialog.dismiss()
+            }
+
+            val dialog: AlertDialog = builder.create()
+
+            dialog.setCanceledOnTouchOutside(false)
+            dialog.show()
         })
-        downloadBtn.setOnClickListener(View.OnClickListener { downloadImage() })
+        downloadBtn.setOnClickListener(View.OnClickListener {
+
+            val builder = AlertDialog.Builder(this)
+
+            builder.setTitle("Confirmation")
+            builder.setMessage("Do you want to download this image in your gallery? ")
+
+            builder.setPositiveButton("Yes") { dialog, which ->
+
+                downloadImage()
+
+            }
+
+            builder.setNegativeButton("No") { dialog, which ->
+                dialog.dismiss()
+            }
+
+            val dialog: AlertDialog = builder.create()
+
+            dialog.setCanceledOnTouchOutside(false)
+            dialog.show()
+
+        })
     }
 
     private val listener: RandomBreedListener = object : RandomBreedListener {
@@ -124,11 +158,36 @@ class RandomDog : AppCompatActivity() {
 
     private fun showRandomBreeds(response: RandomBreedResponse) {
         imgLink = response.message.toString()
-        Picasso.get().load(imgLink).into(imgRandom)
+
+        Picasso.get()
+            .load(imgLink)
+            .placeholder(R.drawable.dog_icon_svg)
+            .into(imgRandom, object : Callback {
+                override fun onSuccess() {
+
+                }
+
+                override fun onError(e: Exception?) {
+                    // Image failed to load, load a new one.
+                    client = ApiClient(this@RandomDog)
+                    client.getRandomBreed(listener)
+                }
+            })
         name = Common.getBreedFromLink(response.message.toString())
         nameRandom.text = name
     }
 
+    private fun setWallpaper(){
+        val wallpaperManager = WallpaperManager.getInstance(this@RandomDog)
+        val bitmap = (imgRandom.getDrawable() as BitmapDrawable).bitmap
+        try {
+            wallpaperManager.setBitmap(bitmap)
+            Toast.makeText(this@RandomDog, "Wallpaper Set!", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(this@RandomDog, "Wallpaper cannot be set", Toast.LENGTH_SHORT).show()
+        }
+    }
     private fun downloadImage() {
         var downloadManager: DownloadManager? = null
         downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager

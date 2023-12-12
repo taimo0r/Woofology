@@ -40,9 +40,7 @@ android:layout_height="match_parent">
             app:layout_constraintBottom_toTopOf="@+id/btn_random"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_breed"
-            tools:srcCompat="@drawable/dog_splash" />
-
+            app:layout_constraintTop_toBottomOf="@+id/tv_breed"/>
         <TextView
             android:id="@+id/tv_breed"
             android:layout_width="0dp"

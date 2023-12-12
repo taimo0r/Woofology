@@ -14,7 +14,7 @@ class BreedImages : AppCompatActivity(), onItemClick {
     private lateinit var adapter: BreedImageAdapter
     private lateinit var client: ApiClient
     private lateinit var type: String
-    var images: List<String> = mutableListOf()
+    var images: MutableList<String> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,10 +57,10 @@ class BreedImages : AppCompatActivity(), onItemClick {
     private fun showAllBreeds(response: AllBreedsResponse) {
         breedImages.setHasFixedSize(true)
         breedImages.layoutManager = GridLayoutManager(this, 4)
-        adapter = BreedImageAdapter(this, response.message!!, this)
+        adapter = BreedImageAdapter(this, response.message!! as MutableList<String>, this)
         breedImages.adapter = adapter
 
-        images = response.message!!
+        images = (response.message as MutableList<String>?)!!
     }
 
     override fun onSupportNavigateUp(): Boolean {

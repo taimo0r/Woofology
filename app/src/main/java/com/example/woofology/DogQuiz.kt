@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import java.util.Random
 
@@ -55,9 +56,9 @@ class DogQuiz : AppCompatActivity() {
         btn4 = findViewById<Button>(R.id.btn_answer_4)
         bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
         progressDialog = ProgressDialog(this@DogQuiz)
-        progressDialog!!.setTitle("Loading")
-        progressDialog!!.setCanceledOnTouchOutside(false)
-        progressDialog!!.show()
+        progressDialog.setTitle("Loading..")
+        progressDialog.setCanceledOnTouchOutside(false)
+        progressDialog.show()
         client = ApiClient(this)
         client.getRandomBreed(listener)
         bottomNavigationView.setSelectedItemId(R.id.quiz_activity)
@@ -181,7 +182,22 @@ class DogQuiz : AppCompatActivity() {
         val r = Random()
         val i1 = r.nextInt(5 - 1) + 1
 
-        Picasso.get().load(response.message).into(quizImg)
+        Picasso.get()
+            .load(response.message)
+            .placeholder(R.drawable.dog_icon_svg)
+            .into(quizImg, object : Callback {
+                override fun onSuccess() {
+
+                }
+
+                override fun onError(e: Exception?) {
+                    // Image failed to load, load a new one.
+                    client = ApiClient(this@DogQuiz)
+                    client.getRandomBreed(listener)
+                }
+            })
+
+   //     Picasso.get().load(response.message).placeholder(R.drawable.dog_icon_svg).into(quizImg)
         answer = Common.getBreedFromLink(response.message.toString())
 
         val buttons = listOf(btn1, btn2, btn3, btn4)
@@ -243,27 +259,25 @@ class DogQuiz : AppCompatActivity() {
         alert.setView(view)
         alertDialog = alert.create()
 
-        animationDrawable = ContextCompat.getDrawable(view.context, R.drawable.animated_false_48)!!
 
         if (!ans) {
-
+  //          animationDrawable = ContextCompat.getDrawable(view.context, R.drawable.animated_false_48)!!
             animationDrawable =
                 ContextCompat.getDrawable(view.context, R.drawable.animated_false_48_outline)!!
             ansIcon.setImageDrawable(animationDrawable)
             ansMsg.text = "Oops! Wrong answer"
 
         } else {
-
-            animationDrawable = ContextCompat.getDrawable(view.context, R.drawable.animated_true_48_outline)!!
+            animationDrawable = ContextCompat.getDrawable(view.context, R.drawable.animated_true_48)!!
             ansIcon.setImageDrawable(animationDrawable)
             ansMsg.text = "Yayy!! You got it right!"
 
         }
         continueTxt.setOnClickListener {
+//            showRandomBreeds()
+            val intent = intent
             finish()
-            overridePendingTransition(0, 0)
             startActivity(intent)
-            overridePendingTransition(0, 0)
         }
         cancelTxt.setOnClickListener { alertDialog.dismiss() }
         alertDialog.show()

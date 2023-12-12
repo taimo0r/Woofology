@@ -1,16 +1,19 @@
 package com.example.woofology
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
 class BreedImageAdapter(
     var context: Context,
-    var breedImagesList: List<String>,
+    var breedImagesList: MutableList<String>,
     onClick: onItemClick
 ) : RecyclerView.Adapter<BreedImageAdapter.ViewHolder?>() {
     var onClick: onItemClick
@@ -26,9 +29,33 @@ class BreedImageAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         val link = breedImagesList[position]
-        Picasso.get().load(breedImagesList[position]).placeholder(R.drawable.dog_icon_svg)
-            .into(holder.breedImage)
+
+        Picasso.get()
+            .load(link)
+            .placeholder(R.drawable.dog_icon_svg)
+            .into(holder.breedImage, object : Callback {
+                override fun onSuccess() {
+                    // Image loaded, show the item
+                    holder.rootView.visibility = View.VISIBLE
+                }
+
+                override fun onError(e: Exception?) {
+                    // Image failed to load, hide the item
+                    val currentPosition = breedImagesList.indexOf(link)
+                    if (currentPosition != -1) {
+                        breedImagesList.removeAt(currentPosition)
+                        notifyItemRemoved(currentPosition)
+                        notifyItemRangeChanged(currentPosition, breedImagesList.size)
+                    }
+                }
+            })
+
+
+//        Picasso.get().load(breedImagesList[position]).placeholder(R.drawable.dog_icon_svg)
+//            .into(holder.breedImage)
+        Log.d("URL", breedImagesList[position])
         holder.breedImage.setOnClickListener { onClick.onImgItemClick(link, position) }
     }
 
@@ -42,5 +69,6 @@ class BreedImageAdapter(
         init {
             breedImage = itemView.findViewById(R.id.image_breed)
         }
+        val rootView: View = itemView
     }
 }

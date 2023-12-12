@@ -162,9 +162,9 @@ class DBManager(context: Context, private val activity: Activity) {
         val breedOneStr = breedDogOne?.name ?: ""
         val breedTwoStr = breedDogTwo?.name ?: ""
         val breedThreeStr = breedDogThree?.name ?: ""
-        val percentageBreedOneStr = String.format("%.5f", percentageBreedOne)
-        val percentageBreedTwoStr = String.format("%.5f", percentageBreedTwo)
-        val percentageThreeStr = String.format("%.5f", percentageBreedThree)
+        val percentageBreedOneStr = String.format("%.2f", percentageBreedOne)
+        val percentageBreedTwoStr = String.format("%.2f", percentageBreedTwo)
+        val percentageThreeStr = String.format("%.2f", percentageBreedThree)
         val selectedBreedStr = selected?.name ?: ""
 
         return Dog(
