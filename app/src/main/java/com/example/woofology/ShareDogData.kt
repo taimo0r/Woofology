@@ -23,7 +23,7 @@ object ShareDogData {
         view.draw(canvas)
 
         // Save Bitmap as JPG
-        val imageFileName = "JPEG_SHARE_IMAGE_DOG.jpg"
+        val imageFileName = "Woofology_Dog_Info.jpg"
         val imageDogShare = File(activity.externalCacheDir, imageFileName)
         //Convert bitmap to byte array
         val bos = ByteArrayOutputStream()
